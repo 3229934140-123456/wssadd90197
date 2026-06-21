@@ -4,6 +4,8 @@ import type {
   Member,
   ApprovalItem,
   ApprovalReason,
+  RegionWeeklyDetail,
+  NotificationMessage,
 } from '@/types'
 
 export const mockOverview: OverviewData = {
@@ -501,4 +503,82 @@ export const mockApprovalReasons: ApprovalReason[] = [
   { id: 'r13', label: '冻结原因已消除', type: 'account_unfreeze' },
   { id: 'r14', label: '风险尚未排除', type: 'account_unfreeze' },
   { id: 'r15', label: '需补充材料', type: 'account_unfreeze' },
+]
+
+export const mockRegionWeeklyDetails: RegionWeeklyDetail[] = [
+  {
+    region: '北京',
+    depositTotal: 7290000,
+    refundPressure: 186000,
+    storeCount: 3,
+    abnormalMemberCount: 8,
+    riskLevel: 'red',
+    stores: [
+      { storeId: 'store-1', storeName: '朝阳门店', depositGrowth: 47.2, consumptionRate: 8.3, deviation: 38.9, refundPressure: 98000, riskLevel: 'red' },
+      { storeId: 'store-2', storeName: '国贸店', depositGrowth: 28.5, consumptionRate: 15.6, deviation: 12.9, refundPressure: 52000, riskLevel: 'yellow' },
+      { storeId: 'store-3', storeName: '海淀店', depositGrowth: 12.1, consumptionRate: 65.2, deviation: -53.1, refundPressure: 36000, riskLevel: 'green' },
+    ],
+  },
+  {
+    region: '上海',
+    depositTotal: 4410000,
+    refundPressure: 92000,
+    storeCount: 2,
+    abnormalMemberCount: 2,
+    riskLevel: 'yellow',
+    stores: [
+      { storeId: 'store-4', storeName: '浦东旗舰店', depositGrowth: 33.8, consumptionRate: 12.4, deviation: 21.4, refundPressure: 68000, riskLevel: 'yellow' },
+      { storeId: 'store-5', storeName: '南京西路店', depositGrowth: 8.9, consumptionRate: 58.7, deviation: -49.8, refundPressure: 24000, riskLevel: 'green' },
+    ],
+  },
+  {
+    region: '广州',
+    depositTotal: 1980000,
+    refundPressure: 68000,
+    storeCount: 1,
+    abnormalMemberCount: 4,
+    riskLevel: 'red',
+    stores: [
+      { storeId: 'store-6', storeName: '天河店', depositGrowth: 52.3, consumptionRate: 6.8, deviation: 45.5, refundPressure: 68000, riskLevel: 'red' },
+    ],
+  },
+  {
+    region: '深圳',
+    depositTotal: 1650000,
+    refundPressure: 34000,
+    storeCount: 1,
+    abnormalMemberCount: 1,
+    riskLevel: 'green',
+    stores: [
+      { storeId: 'store-7', storeName: '深圳南山店', depositGrowth: 18.6, consumptionRate: 42.1, deviation: -23.5, refundPressure: 34000, riskLevel: 'green' },
+    ],
+  },
+]
+
+export const mockNotifications: NotificationMessage[] = [
+  {
+    id: 'notif-1',
+    type: 'weekly_report',
+    title: '第25周区域资金周报',
+    summary: '北京区域退费压力18.6万上升42%，广州天河店储值偏离度达45.5%',
+    time: '2026-06-22 09:00',
+    read: false,
+    data: mockRegionWeeklyDetails,
+  },
+  {
+    id: 'notif-2',
+    type: 'risk_alert',
+    title: '高风险门店预警',
+    summary: '朝阳门店3天储值增长47%但消耗仅8%，建议重点关注',
+    time: '2026-06-21 15:30',
+    read: false,
+  },
+  {
+    id: 'notif-3',
+    type: 'system',
+    title: '系统通知',
+    summary: '本周新增3笔超额赠金审批待处理，请及时审批避免业务阻塞',
+    time: '2026-06-21 08:00',
+    read: true,
+  },
 ]

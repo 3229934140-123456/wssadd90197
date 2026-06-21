@@ -3,9 +3,9 @@ import { BottomNav } from '@/components/BottomNav'
 import Overview from '@/pages/Overview'
 import Stores from '@/pages/Stores'
 import { Alerts } from '@/pages/Alerts'
-import { Approvals } from '@/pages/Approvals'
+import { Messages } from '@/pages/Messages'
 import MemberDetail from '@/pages/MemberDetail'
-import StoreDetail from '@/pages/StoreDetail'
+import { StoreDetail } from '@/pages/StoreDetail'
 
 export default function App() {
   return (
@@ -17,7 +17,7 @@ export default function App() {
             <Route path="/stores" element={<Stores />} />
             <Route path="/stores/:id" element={<StoreDetail />} />
             <Route path="/alerts" element={<Alerts />} />
-            <Route path="/approvals" element={<Approvals />} />
+            <Route path="/messages" element={<Messages />} />
             <Route path="/member/:id" element={<MemberDetail />} />
           </Routes>
         </div>

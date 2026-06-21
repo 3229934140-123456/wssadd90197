@@ -33,6 +33,36 @@ export interface WeeklyReport {
   period: string
 }
 
+export interface RegionWeeklyDetail {
+  region: string
+  depositTotal: number
+  refundPressure: number
+  storeCount: number
+  abnormalMemberCount: number
+  riskLevel: RiskLevel
+  stores: RegionStoreDetail[]
+}
+
+export interface RegionStoreDetail {
+  storeId: string
+  storeName: string
+  depositGrowth: number
+  consumptionRate: number
+  deviation: number
+  refundPressure: number
+  riskLevel: RiskLevel
+}
+
+export interface NotificationMessage {
+  id: string
+  type: 'weekly_report' | 'system' | 'risk_alert'
+  title: string
+  summary: string
+  time: string
+  read: boolean
+  data?: RegionWeeklyDetail[]
+}
+
 export interface Store {
   id: string
   name: string
@@ -47,6 +77,13 @@ export interface Store {
   totalDeposit: number
   totalConsumed: number
   memberCount: number
+}
+
+export interface WatchedStoreInfo {
+  storeId: string
+  note: string
+  nextFollowUp: string
+  addedAt: string
 }
 
 export interface Member {
@@ -71,6 +108,15 @@ export interface MemberAlert {
   type: 'spike_deposit' | 'consultant_concentrated' | 'frequent_split'
   description: string
   time: string
+}
+
+export type DispositionStatus = 'pending' | 'contacted' | 'needs_review' | 'suggest_refund' | 'resolved'
+
+export interface MemberDisposition {
+  memberId: string
+  status: DispositionStatus
+  note: string
+  updatedAt: string
 }
 
 export interface DepositRecord {

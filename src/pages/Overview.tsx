@@ -29,7 +29,7 @@ export default function Overview() {
           <p className="text-xs text-text-muted mt-0.5">{today}</p>
         </div>
         <button
-          onClick={() => navigate('/approvals')}
+          onClick={() => navigate('/messages')}
           className="relative flex items-center gap-1 bg-bg-card rounded-xl px-3 py-2 border border-border-default"
         >
           <Bell size={16} className="text-text-secondary" />

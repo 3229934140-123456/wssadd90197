@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom'
-import { LayoutDashboard, Building2, AlertTriangle, CheckSquare } from 'lucide-react'
+import { LayoutDashboard, Building2, AlertTriangle, MessageSquare } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useAppStore } from '@/store/appStore'
 
@@ -7,14 +7,17 @@ const tabs = [
   { path: '/', label: '概览', icon: LayoutDashboard },
   { path: '/stores', label: '门店', icon: Building2 },
   { path: '/alerts', label: '异常', icon: AlertTriangle },
-  { path: '/approvals', label: '审批', icon: CheckSquare },
+  { path: '/messages', label: '消息', icon: MessageSquare },
 ]
 
 export function BottomNav() {
   const location = useLocation()
   const navigate = useNavigate()
   const getPendingApprovalCount = useAppStore((s) => s.getPendingApprovalCount)
-  const pendingCount = getPendingApprovalCount()
+  const getUnreadNotificationCount = useAppStore((s) => s.getUnreadNotificationCount)
+  const pendingApprovals = getPendingApprovalCount()
+  const unreadNotifs = getUnreadNotificationCount()
+  const totalBadge = pendingApprovals + unreadNotifs
 
   const isActive = (path: string) => {
     if (path === '/') return location.pathname === '/'
@@ -27,7 +30,7 @@ export function BottomNav() {
         {tabs.map((tab) => {
           const active = isActive(tab.path)
           const Icon = tab.icon
-          const showBadge = tab.path === '/approvals' && pendingCount > 0
+          const showBadge = tab.path === '/messages' && totalBadge > 0
           return (
             <button
               key={tab.path}
@@ -41,7 +44,7 @@ export function BottomNav() {
                 <Icon className={cn('w-5 h-5', active && 'drop-shadow-[0_0_6px_rgba(0,212,170,0.5)]')} strokeWidth={active ? 2.5 : 2} />
                 {showBadge && (
                   <span className="absolute -top-1.5 -right-2.5 min-w-[16px] h-4 flex items-center justify-center bg-risk-red text-white text-[10px] font-bold rounded-full px-1">
-                    {pendingCount > 9 ? '9+' : pendingCount}
+                    {totalBadge > 9 ? '9+' : totalBadge}
                   </span>
                 )}
               </div>

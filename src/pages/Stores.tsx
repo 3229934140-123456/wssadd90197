@@ -12,12 +12,24 @@ const deviationBarWidth = (d: number) => Math.min(Math.abs(d), 50) * 2
 
 export function Stores() {
   const navigate = useNavigate()
-  const watchedStoreIds = useAppStore((s) => s.watchedStoreIds)
-  const toggleWatchStore = useAppStore((s) => s.toggleWatchStore)
+  const watchedStores = useAppStore((s) => s.watchedStores)
+  const isWatched = useAppStore((s) => s.isWatched)
+  const addWatchStore = useAppStore((s) => s.addWatchStore)
+  const removeWatchStore = useAppStore((s) => s.removeWatchStore)
 
+  const watchedIds = watchedStores.map((w) => w.storeId)
   const sorted = [...mockStores].sort((a, b) => b.deviation - a.deviation)
-  const watched = sorted.filter((s) => watchedStoreIds.includes(s.id))
-  const rest = sorted.filter((s) => !watchedStoreIds.includes(s.id))
+  const watched = sorted.filter((s) => watchedIds.includes(s.id))
+  const rest = sorted.filter((s) => !watchedIds.includes(s.id))
+
+  const handleToggle = (e: React.MouseEvent, storeId: string) => {
+    e.stopPropagation()
+    if (isWatched(storeId)) {
+      removeWatchStore(storeId)
+    } else {
+      addWatchStore(storeId)
+    }
+  }
 
   const renderRow = (store: (typeof sorted)[0], rank: number, isWatchedRow = false) => (
     <div
@@ -50,9 +62,9 @@ export function Stores() {
       <RiskBadge level={store.riskLevel} size="sm" />
       <button
         className="shrink-0 p-1"
-        onClick={(e) => { e.stopPropagation(); toggleWatchStore(store.id) }}
+        onClick={(e) => handleToggle(e, store.id)}
       >
-        {watchedStoreIds.includes(store.id)
+        {isWatched(store.id)
           ? <Eye className="h-4 w-4 text-amber-400" />
           : <EyeOff className="h-4 w-4 text-text-muted" />}
       </button>
